@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
+// import { ErrorMessage } from "@hookform/error-message";
 import { MainContainer } from "../MainContainer/MainContainer";
 import { Form } from "../Form/Form";
 import { PrimaryButton } from "../PrimaryButton/PrimaryButton";
@@ -26,6 +27,7 @@ const scheme = yup.object().shape({
     .min("1999-01-01", "Слишком маленькая дата")
     .max("2010-01-01", "Слишком большая дата")
     .required("Обязательное поле"),
+  gender: yup.string().required("Обязательное поле"),
 });
 
 export const Step1 = () => {
@@ -33,20 +35,20 @@ export const Step1 = () => {
   const {
     register,
     handleSubmit,
-    watch,
+
+    control,
     formState: { errors },
   } = useForm({
     mode: "onBlur", //Режим валидации(по событию)
     resolver: yupResolver(scheme), //Запуск внешнего метода проверки
   });
 
-  const watcher = watch("gender");
-
   const onSubmit = (data) => {
     console.log("DATA", data);
 
     //Переход к следующему шагу
     // history.push("/step2/");
+    // console.log("ERRORS", errors);
   };
 
   return (
@@ -128,12 +130,13 @@ export const Step1 = () => {
           helperText={errors?.date?.message}
         />
         <SelectBlock
-          //{...register("gender")}
-          ref={register()}
+          control={control}
+          error={errors}
           id="gender"
           label="Пол"
           name="gender"
         />
+
         <PrimaryButton>Сохранить и перейти далее</PrimaryButton>
       </Form>
     </MainContainer>
