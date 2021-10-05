@@ -7,7 +7,7 @@ import { Controller } from "react-hook-form";
 import FormHelperText from "@mui/material/FormHelperText";
 
 export const SelectBlock = ({ control, name, error }) => {
-  console.log("error", error);
+  // console.log("error", error);
   return (
     <Controller
       control={control}

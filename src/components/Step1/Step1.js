@@ -6,11 +6,11 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import { ErrorMessage } from "@hookform/error-message";
 import { MainContainer } from "../MainContainer/MainContainer";
 import { Form } from "../Form/Form";
 import { PrimaryButton } from "../PrimaryButton/PrimaryButton";
 import { SelectBlock } from "../Select/Select";
+import { Input } from "../Input/Input";
 
 //Схема данных(как валидировать поля)
 const scheme = yup.object().shape({
@@ -22,12 +22,24 @@ const scheme = yup.object().shape({
     .string()
     .matches(/^([^0-9]*)$/, "Фамилия не должна содержать числа")
     .required("Обязательное поле"),
-  date: yup
+  city: yup
+    .string()
+    .matches(/^([^0-9]*)$/, "Название не должно содержать числа")
+    .required("Обязательное поле"),
+  birthday: yup
     .date()
-    .min("1999-01-01", "Слишком маленькая дата")
-    .max("2010-01-01", "Слишком большая дата")
+    .min("1930-01-01", "Слишком маленькая дата")
+    .max("2005-01-01", "Слишком большая дата")
     .required("Обязательное поле"),
   gender: yup.string().required("Обязательное поле"),
+  citizenship: yup
+    .string()
+    .matches(/^([^0-9]*)$/, "Поле должно содержать только буквы")
+    .required("Обязательное поле"),
+  position: yup
+    .string()
+    .matches(/^([^0-9]*)$/, "Поле должно содержать только буквы")
+    .required("Обязательное поле"),
 });
 
 export const Step1 = () => {
@@ -35,7 +47,6 @@ export const Step1 = () => {
   const {
     register,
     handleSubmit,
-
     control,
     formState: { errors },
   } = useForm({
@@ -64,70 +75,60 @@ export const Step1 = () => {
           variant="outlined"
           margin="normal"
           fullWidth
+          // control={control}
           id="photo"
           type="file"
           accept=".jpeg, .jpg, .png"
           name="photo"
+          // error={errors}
         />
-        <TextField
-          {...register("lastName")}
-          variant="outlined"
-          margin="normal"
-          fullWidth
+        <Input
+          control={control}
           id="lastName"
           type="text"
           label="Фамилия"
           name="lastName"
-          error={!!errors.lastName}
-          helperText={errors?.lastName?.message}
+          error={errors}
         />
-        <TextField
-          {...register("firstName")}
-          variant="outlined"
-          margin="normal"
-          fullWidth
+        <Input
+          control={control}
           id="firstName"
           type="text"
           label="Имя"
           name="firstName"
-          error={!!errors.firstName}
-          helperText={errors?.firstName?.message}
+          error={errors}
         />
-        <TextField
-          {...register("secondName")}
-          variant="outlined"
-          margin="normal"
-          fullWidth
+        <Input
+          control={control}
           id="secondName"
           type="text"
           label="Отчество"
           name="secondName"
+          error={errors}
         />
-        <TextField
-          {...register("city")}
-          variant="outlined"
-          margin="normal"
-          fullWidth
+        <Input
+          control={control}
           id="city"
           type="text"
           label="Город проживания"
           name="city"
+          error={errors}
         />
         <TextField
-          {...register("date")}
+          {...register("birthday")}
           variant="outlined"
           margin="normal"
           fullWidth
-          id="date"
+          id="birthday"
           label="Дата рождения"
           type="date"
-          name="date"
-          defaultValue="2000-01-01"
+          name="birthday"
+          defaultValue="2006-01-01"
           InputLabelProps={{
             shrink: true,
           }}
-          error={!!errors.date}
-          helperText={errors?.date?.message}
+          error={!!errors.birthday}
+          helperText={errors?.birthday?.message}
         />
         <SelectBlock
           control={control}
@@ -136,7 +137,32 @@ export const Step1 = () => {
           label="Пол"
           name="gender"
         />
-
+        <Input
+          control={control}
+          id="citizenship"
+          label="Гражданство"
+          type="text"
+          name="citizenship"
+          error={errors}
+        />
+        <Input
+          control={control}
+          id="position"
+          label="Желаемая позиция"
+          type="text"
+          name="position"
+          error={errors}
+        />
+        <Input
+          control={control}
+          error={errors}
+          id="aboutme"
+          label="О себе"
+          type="text"
+          name="aboutme"
+          multiline={true}
+          maxRows={4}
+        />
         <PrimaryButton>Сохранить и перейти далее</PrimaryButton>
       </Form>
     </MainContainer>
