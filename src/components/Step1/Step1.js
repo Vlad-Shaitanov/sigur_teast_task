@@ -41,6 +41,12 @@ const scheme = yup.object().shape({
     .string()
     .matches(/^([^0-9]*)$/, "Поле должно содержать только буквы")
     .required("Обязательное поле"),
+  sum: yup
+    .string()
+    // .matches(/[^a-zA-Zа-яА-Я]/g, "Поле должно содержать только цифры")
+    .matches(/([^a-zA-Zа-яА-Я\D*])/g, "Поле должно содержать только цифры")
+    .required("Обязательное поле"),
+  currency: yup.string().required("Обязательное поле"),
 });
 
 export const Step1 = () => {
@@ -59,7 +65,7 @@ export const Step1 = () => {
     console.log("DATA", data);
 
     //Переход к следующему шагу
-    // history.push("/step2/");
+    history.push("/step2/");
     // console.log("ERRORS", errors);
   };
 
