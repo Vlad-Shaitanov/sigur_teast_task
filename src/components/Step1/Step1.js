@@ -10,6 +10,7 @@ import { MainContainer } from "../MainContainer/MainContainer";
 import { Form } from "../Form/Form";
 import { PrimaryButton } from "../PrimaryButton/PrimaryButton";
 import { SelectBlock } from "../Select/Select";
+import { CustomSelect } from "../Select/CustomSelect";
 import { Input } from "../Input/Input";
 
 //Схема данных(как валидировать поля)
@@ -152,6 +153,13 @@ export const Step1 = () => {
           type="text"
           name="position"
           error={errors}
+        />
+        <CustomSelect
+          control={control}
+          error={errors}
+          id="salary"
+          label="Зарплата"
+          name="salary"
         />
         <Input
           control={control}
