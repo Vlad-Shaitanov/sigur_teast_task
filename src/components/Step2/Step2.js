@@ -6,6 +6,7 @@ import { Form } from "../Form/Form";
 import { PrimaryButton } from "../PrimaryButton/PrimaryButton";
 import { Workplace } from "../Workplace/Workplace";
 import * as yup from "yup";
+import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -18,11 +19,24 @@ import Button from "@mui/material/Button";
 
 const scheme = yup.object().shape({});
 
+// const input = yup.object({
+//   company: yup.string().required("Обязательное поле"),
+//   workPosition: yup.string().required("Обязательное поле"),
+// });
+//
+// const valdationSchema = yup.object({
+//   input1: input,
+//   // input2: input,
+// });
+
+// todo Разобраться с валидацией динамически создаваемых полей(компонент с нужными полями мапится из состояния)
+// todo Разобраться с ошибками в именовании атрибутов, возникающими при работе с датапикером
+
 export const Step2 = () => {
   //Места работы
   const [works, setWorks] = useState([]);
 
-  // const history = useHistory();
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -35,18 +49,18 @@ export const Step2 = () => {
     },
     mode: "onBlur", //Режим валидации(по событию)
     resolver: yupResolver(scheme), //Запуск внешнего метода проверки
+    // resolver: yupResolver(valdationSchema), //Запуск внешнего метода проверки
   });
 
   const handleWorkplace = () => {
     setWorks((prevState) => [...prevState, "new place"]);
-    console.log(works);
   };
 
   const onSubmit = (data) => {
     console.log("DATA", data);
 
     //Переход к следующему шагу
-    // history.push("/step2/");
+    history.push("/step3");
     // console.log("ERRORS", errors);
   };
 
@@ -84,14 +98,6 @@ export const Step2 = () => {
                 />
               </RadioGroup>
             </FormControl>
-            {/*{experience && (*/}
-            {/*<Workplace*/}
-            {/*control={control}*/}
-            {/*error={errors}*/}
-            {/*watch={watch}*/}
-            {/*register={register}*/}
-            {/*/>*/}
-            {/*)}*/}
             {experience && (
               <>
                 <p style={{ textAlign: "center" }}>Места работы:</p>
@@ -102,6 +108,7 @@ export const Step2 = () => {
                     watch={watch}
                     register={register}
                     index={indx}
+                    // key={uuidv4()}
                     key={indx}
                   />
                 ))}
