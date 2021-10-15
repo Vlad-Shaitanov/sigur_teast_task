@@ -17,17 +17,25 @@ import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-const scheme = yup.object().shape({});
-
-// const input = yup.object({
-//   company: yup.string().required("Обязательное поле"),
-//   workPosition: yup.string().required("Обязательное поле"),
-// });
-//
-// const valdationSchema = yup.object({
-//   input1: input,
-//   // input2: input,
-// });
+// const scheme = yup.object().shape({});
+const scheme = yup
+  .object()
+  .shape({
+    untilNow: yup.boolean(),
+    haveExp: yup.string(),
+    job: yup.array().of(
+      yup.object().shape({
+        company: yup
+          .string()
+          .matches(/^([^0-9]*)$/, "Фамилия не должна содержать числа")
+          .required("as"),
+        startWork: yup.date().required("Обязательное поле"),
+        endWork: yup.date().required("Обязательное поле"),
+        workPosition: yup.string().required("Обязательное поле"),
+      })
+    ),
+  })
+  .required();
 
 // todo Разобраться с валидацией динамически создаваемых полей(компонент с нужными полями мапится из состояния)
 // todo Разобраться с ошибками в именовании атрибутов, возникающими при работе с датапикером
@@ -60,9 +68,10 @@ export const Step2 = () => {
     console.log("DATA", data);
 
     //Переход к следующему шагу
-    history.push("/step3");
-    // console.log("ERRORS", errors);
+    // history.push("/step3");
+    console.log("ERRORS STEP2", errors);
   };
+  console.log("ERRORS STEP2", errors);
 
   //Если нажата кнопка "Есть", будем отрисовывать компонент
   let experience = watch("haveExp");
