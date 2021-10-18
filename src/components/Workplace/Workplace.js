@@ -6,6 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import { makeStyles, createStyles } from "@mui/styles";
 import FormHelperText from "@mui/material/FormHelperText";
+import { SerializedInput } from "../Input/SerializedInput";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -23,7 +24,7 @@ const useStyles = makeStyles(() =>
 export const Workplace = ({ control, name, error, watch, register, index }) => {
   const classes = useStyles();
 
-  let untilNow = watch(`untilNow${index}`);
+  let untilNow = watch(`job.${index}.untilNow`);
   // console.log("untilNow", untilNow);
   // console.log("ERRORS", error);
   return (
@@ -32,16 +33,16 @@ export const Workplace = ({ control, name, error, watch, register, index }) => {
         <ViewDatePicker
           control={control}
           /*{...register(`startWork${index}`, { required: true })}*/
-          id={`startWork${index}`}
-          name={`startWork${index}`}
+          id={`job.${index}.startWork`}
+          name={`job.${index}.startWork`}
           label="Начало работы"
           required
         />
         <FormControlLabel
           control={
             <Checkbox
-              {...register(`untilNow${index}`)}
-              name={`untilNow${index}`}
+              {...register(`job.${index}.untilNow`)}
+              name={`job.${index}.untilNow`}
               color="primary"
               defaultChecked={true}
               defaultValue={false}
@@ -53,45 +54,45 @@ export const Workplace = ({ control, name, error, watch, register, index }) => {
           <ViewDatePicker
             control={control}
             /*{...register(`endWork${index}`, { required: true })}*/
-            id={`endWork${index}`}
-            name={`endWork${index}`}
+            id={`job.${index}.endWork`}
+            name={`job.${index}.endWork`}
             label="Окончание работы"
             required
           />
         )}
 
-        <Input
+        <SerializedInput
           control={control}
           /*{...register(`company${index}`, { required: true })}*/
-          id={`company${index}`}
+          id={`job.${index}.company`}
           type="text"
           label="Название компании"
-          name={`company${index}`}
+          name={`job.${index}.company`}
           size="small"
           required
           error={error}
         />
-        <Input
+        <SerializedInput
           control={control}
           /*{...register(`workPosition${index}`, { required: true })}*/
-          id={`workPosition${index}`}
+          id={`job.${index}.workPosition`}
           type="text"
           label="Должность"
-          name={`workPosition${index}`}
+          name={`job.${index}.workPosition`}
           size="small"
           required
           error={error}
           // error={!!error.workPosition}
         />
         {/*<FormHelperText error>{error?.workPosition?.message}</FormHelperText>*/}
-        <Input
+        <SerializedInput
           control={control}
           /*{...register(`responsibilities${index}`)}*/
           error={error}
-          id={`responsibilities${index}`}
+          id={`job.${index}.responsibilities`}
           label="Обязанности"
           type="text"
-          name={`responsibilities${index}`}
+          name={`job.${index}.responsibilities`}
           multiline={true}
           maxRows={4}
           placeholder="Опишите Ваши типовые обязанности на прошлом месте"

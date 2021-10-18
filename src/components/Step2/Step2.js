@@ -21,14 +21,14 @@ import Button from "@mui/material/Button";
 const scheme = yup
   .object()
   .shape({
-    untilNow: yup.boolean(),
-    haveExp: yup.string(),
+    // untilNow: yup.boolean(),
+    // haveExp: yup.string(),
     job: yup.array().of(
       yup.object().shape({
         company: yup
           .string()
-          .matches(/^([^0-9]*)$/, "Фамилия не должна содержать числа")
-          .required("as"),
+          .matches(/^([^0-9]*)$/, "Название не должно содержать числа")
+          .required("Обязательное поле"),
         startWork: yup.date().required("Обязательное поле"),
         endWork: yup.date().required("Обязательное поле"),
         workPosition: yup.string().required("Обязательное поле"),
@@ -37,8 +37,9 @@ const scheme = yup
   })
   .required();
 
-// todo Разобраться с валидацией динамически создаваемых полей(компонент с нужными полями мапится из состояния)
 // todo Разобраться с ошибками в именовании атрибутов, возникающими при работе с датапикером
+// todo Отрефакторить инпут для одиночного применения и в цикле
+// todo Решить проблему падения проекта, когда форма отправляется с пустыми полями и затем нажата кнопка добавления нового места (шаг2)
 
 export const Step2 = () => {
   //Места работы
